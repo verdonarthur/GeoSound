@@ -13,6 +13,7 @@ mongoose.connect(config.urlDatabase);
 
 /*+++++++++++++++API ROUTE LOADING++++++++++++++++++*/
 // example : app.use('/api/user', user)
+app.use('/api/sound', require('./routes/soundRouter'))
 
 app.get('/', (req,res)=>{
     res.send('application is launched')
