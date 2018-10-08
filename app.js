@@ -2,7 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const config = require('./config/app.conf.js')
 const app = express()
-const port = 3000
+const port = process.env.port || 3000
 
 /*+++++++++++++++EXPRESS CONFIGURATION++++++++++++++++++*/
 app.use(express.json());       // to support JSON-encoded bodies
