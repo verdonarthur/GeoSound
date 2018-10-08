@@ -14,5 +14,9 @@ mongoose.connect(config.urlDatabase);
 /*+++++++++++++++API ROUTE LOADING++++++++++++++++++*/
 // example : app.use('/api/user', user)
 
+app.get('/', (req,res)=>{
+    res.send('application is launched')
+});
+
 app.listen(port, 
     () => console.log(`App listening on port : ${port}!`))
