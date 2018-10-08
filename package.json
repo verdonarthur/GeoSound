@@ -1,0 +1,19 @@
+{
+  "name": "geosound",
+  "version": "1.0.0",
+  "description": "geosound is an app wich you can create sounds that are geolocalized",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/verdonarthur/GeoSound.git"
+  },
+  "author": "Verdon Arthur, Rallu Etienne, Beauverd Julien",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/verdonarthur/GeoSound/issues"
+  },
+  "homepage": "https://github.com/verdonarthur/GeoSound#readme"
+}
