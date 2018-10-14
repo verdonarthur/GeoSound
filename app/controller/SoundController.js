@@ -4,31 +4,45 @@ module.exports = class {
     /**
      * return all sound in database in JSON
      */
-    static async getAllSound(){
-        try{
+    static async getAllSound() {
+        try {
             return Sound.find()
-        } catch(err){
+        } catch (err) {
             console.log(err)
             return null
         }
-        
+
     }
 
-    static async getASound(id){
-        
+    /**
+     * Send a sound from db by the id in param
+     * @param {*} id 
+     */
+    static async getASound(id) {
+        try {
+            let sound = Sound.findById(id)
+            return sound
+        } catch (err) {
+            throw err
+        }
     }
 
     /**
      * save a sound in db a return it in json
      * @param {*} sound 
      */
-    static async saveASound(sound){
-        try{
+    static async saveASound(sound) {
+        if (!sound.sound || !sound.coordinate || !sound.description
+            || !sound.quality || !sound.user) {
+            throw new Error("Missing fields in :" + sound)
+        }
+
+        try {
             let aSound = new Sound(sound)
-            return await aSound.save()            
-        }catch(err){
+            return await aSound.save()
+        } catch (err) {
             console.log(err)
-            return null
+            throw err
         }
     }
 }
