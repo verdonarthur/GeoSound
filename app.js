@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const config = require('./config/app.conf.js')
 const app = express()
 const port = process.env.PORT || 3000
+const userRouter = require('./routes/userRouter')
 
 /*+++++++++++++++EXPRESS CONFIGURATION++++++++++++++++++*/
 app.use(express.json());       // to support JSON-encoded bodies
@@ -14,6 +15,8 @@ mongoose.connect(config.urlDatabase);
 /*+++++++++++++++API ROUTE LOADING++++++++++++++++++*/
 // example : app.use('/api/user', user)
 app.use('/api/sound', require('./routes/soundRouter'))
+
+app.use('/api/user', userRouter)
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {
