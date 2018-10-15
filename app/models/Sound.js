@@ -51,6 +51,6 @@ let soundSchema = new mongoose.Schema({
         type: Number, // TODO a change
         required: true
     },
-});
+})
 
-module.exports = mongoose.model('sounds', soundSchema);
+module.exports = mongoose.model('sounds', soundSchema)

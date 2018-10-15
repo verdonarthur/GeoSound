@@ -34,7 +34,7 @@ async function loadSoundFromParam(req, res, next) {
  * 
  * @apiSuccess {Object[]} sounds 
  */
-router.get('/city', async (req,res,next) =>{
+router.get('/city', async (req, res, next) => {
     try {
         res.send(await SoundController.getAllCities())
     } catch (err) {
@@ -49,7 +49,7 @@ router.get('/city', async (req,res,next) =>{
  * 
  * @apiSuccess {Object[]} sounds 
  */
-router.get('/city/stats', async (req,res,next) =>{
+router.get('/city/stats', async (req, res, next) => {
     try {
         res.send(await SoundController.getCitiesStat())
     } catch (err) {
@@ -66,16 +66,10 @@ router.get('/city/stats', async (req,res,next) =>{
  * 
  * @apiSuccess {Object[]} sounds 
  */
-router.get('/city/:name', async (req,res,next)=>{
-    /*if(!req.params.name){
-        const err = new Error("invalid param")
-        err.status = 400
-        return next(err)
-    }   */     
-
-    try{
+router.get('/city/:name', async (req, res, next) => {
+    try {
         res.send(await SoundController.getSoundByCity(req.params.name))
-    }catch(err){
+    } catch (err) {
         return next(err)
     }
 })

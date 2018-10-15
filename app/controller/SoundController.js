@@ -29,17 +29,22 @@ module.exports = class {
         })
     }
 
-    static async getCitiesStat(){
+    static async getCitiesStat() {
         let tmpCities = await Sound.aggregate([{
             // used to destructurate the city from the array of coordinate
             $unwind: "$coordinate"
         },
         {
+            $sort: {
+                "coordinate.city": 1
+            }
+        },
+        {
             // group all city together
             $group: {
                 _id: '$coordinate.city',
-                nbrSound:{"$sum":1},
-                sounds:{"$push":"$/"}
+                nbrSound: { "$sum": 1 },
+                sounds: { "$push": "$$CURRENT" }
             }
         }
         ])
@@ -87,7 +92,7 @@ module.exports = class {
      * @param {Object} sound 
      */
     static async putASound(id, sound) {
-        return Sound.findOneAndUpdate({_id:id}, sound, { new: true });
+        return Sound.findOneAndUpdate({ _id: id }, sound, { new: true });
     }
 
     /**
