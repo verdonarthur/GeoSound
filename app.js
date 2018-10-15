@@ -25,6 +25,7 @@ app.use((req, res, next) => {
     next(err);
 });
 
+/*+++++++++++++++API MIDDLEWARE TO MANAGE ERROR++++++++++++++++++*/
 // API error handler (responds with JSON)
 app.use('/api', (err, req, res, next) => {
 
@@ -65,6 +66,8 @@ app.use((err, req, res, next) => {
     res.render('error');
 });
 
+
+/*+++++++++++++++MAIN ROUTE++++++++++++++++++*/
 app.get('/', (req, res) => {
     res.send('application is launched')
 });

@@ -62,6 +62,17 @@ router.get('/:id', loadSoundFromParam, async (req, res, next) => {
 })
 
 /**
+ * @api {get} /sound/city/ Get all sound grouped by city
+ * @apiName GET SOUNDS GROUPED BY CITY
+ * @apiGroup Sound
+ * 
+ * @apiSuccess {Object[]} sounds 
+ */
+router.get('/city', async (req,res,next) =>{
+    //TODO
+})
+
+/**
  * @api {get} /sound/city/:name Get all sound in a city
  * @apiName GET SOUNDS BY CITY
  * @apiGroup Sound
@@ -74,6 +85,16 @@ router.get('/city/:name', async (req,res,next)=>{
     //TODO
 })
 
+/**
+ * @api {get} /city/stats/ Get the number of sounds recorded by city
+ * @apiName GET NUMBER SOUNDS BY CITY
+ * @apiGroup Sound
+ * 
+ * @apiSuccess {Object[]} sounds 
+ */
+router.get('/city/stats', async (req,res,next) =>{
+    //TODO 
+})
 
 /**
  * @api {post} /sound/ Save a new sound
