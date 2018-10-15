@@ -1,6 +1,6 @@
 # GeoSound
 ## Database schema
-### table : users
+### table : categories
 
 | Attributes  | Description |
 | ----------- | :---------: |
@@ -26,4 +26,5 @@
 | id         |             |
 | name       |             |
 | password   |             |
+| email      |             |
 
