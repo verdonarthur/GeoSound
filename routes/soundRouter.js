@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const SoundController = require('../app/controller/SoundController')
-const LogUtils = require('../app/utils/LogUtils')
 
 /**
  * Middleware function, used to prevent too much code duplication
@@ -11,11 +10,22 @@ const LogUtils = require('../app/utils/LogUtils')
  */
 async function loadSoundFromParam(req, res, next) {
     try {
-        res.sound = await SoundController.getASound(req.params.id)        
-        next()
+
+        res.sound = await SoundController.getASound(req.params.id)
+
+        if (!res.sound) {
+            const err = new Error("Sounds not found")
+            err.status = 404;
+
+            return next(err)
+        }
+
+        return next()
     } catch (err) {
+        err.status = 400
         return next(err)
     }
+
 }
 
 /**
