@@ -5,13 +5,7 @@ module.exports = class {
      * return all sound in database in JSON
      */
     static async getAllSound() {
-        try {
-            return Sound.find()
-        } catch (err) {
-            console.log(err)
-            return null
-        }
-
+        return Sound.find()
     }
 
     /**
@@ -19,30 +13,38 @@ module.exports = class {
      * @param {*} id 
      */
     static async getASound(id) {
-        try {
-            let sound = Sound.findById(id)
-            return sound
-        } catch (err) {
-            throw err
-        }
+        return Sound.findById(id)
     }
 
     /**
-     * save a sound in db a return it in json
+     * save a new sound in db a return it in json
      * @param {*} sound 
      */
-    static async saveASound(sound) {
+    static async postASound(sound) {
         if (!sound.sound || !sound.coordinate || !sound.description
             || !sound.quality || !sound.user) {
             throw new Error("Missing fields in :" + sound)
         }
 
-        try {
-            let aSound = new Sound(sound)
-            return await aSound.save()
-        } catch (err) {
-            console.log(err)
-            throw err
-        }
+        let aSound = new Sound(sound)
+        return aSound.save()
+
+    }
+
+    /**
+     * Update a sound in the db
+     * @param {*} id 
+     * @param {*} sound 
+     */
+    static async putASound(id, sound) {
+        return Sound.findOneAndUpdate(id, sound,{new:true});
+    }
+
+    /**
+     * Delete the sound by the id in param
+     * @param {*} id 
+     */
+    static async deleteASound(id) {
+        return Sound.findByIdAndDelete(id)
     }
 }
