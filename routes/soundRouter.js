@@ -25,8 +25,60 @@ async function loadSoundFromParam(req, res, next) {
         err.status = 400
         return next(err)
     }
-
 }
+
+/**
+ * @api {get} /sound/city/ Get all sound grouped by city
+ * @apiName GET SOUNDS GROUPED BY CITY
+ * @apiGroup Sound
+ * 
+ * @apiSuccess {Object[]} sounds 
+ */
+router.get('/city', async (req,res,next) =>{
+    try {
+        res.send(await SoundController.getAllCities())
+    } catch (err) {
+        return next(err)
+    }
+})
+
+/**
+ * @api {get} /city/stats/ Get the number of sounds recorded by city
+ * @apiName GET NUMBER SOUNDS BY CITY
+ * @apiGroup Sound
+ * 
+ * @apiSuccess {Object[]} sounds 
+ */
+router.get('/city/stats', async (req,res,next) =>{
+    try {
+        res.send(await SoundController.getCitiesStat())
+    } catch (err) {
+        return next(err)
+    }
+})
+
+/**
+ * @api {get} /sound/city/:name Get all sound in a city
+ * @apiName GET SOUNDS BY CITY
+ * @apiGroup Sound
+ * 
+ * @apiParam {name} name of the city
+ * 
+ * @apiSuccess {Object[]} sounds 
+ */
+router.get('/city/:name', async (req,res,next)=>{
+    /*if(!req.params.name){
+        const err = new Error("invalid param")
+        err.status = 400
+        return next(err)
+    }   */     
+
+    try{
+        res.send(await SoundController.getSoundByCity(req.params.name))
+    }catch(err){
+        return next(err)
+    }
+})
 
 /**
  * @api {get} /sound/ Request all Sounds
@@ -59,41 +111,6 @@ router.get('/:id', loadSoundFromParam, async (req, res, next) => {
         return next(err)
     }
 
-})
-
-/**
- * @api {get} /sound/city/ Get all sound grouped by city
- * @apiName GET SOUNDS GROUPED BY CITY
- * @apiGroup Sound
- * 
- * @apiSuccess {Object[]} sounds 
- */
-router.get('/city', async (req,res,next) =>{
-    //TODO
-})
-
-/**
- * @api {get} /sound/city/:name Get all sound in a city
- * @apiName GET SOUNDS BY CITY
- * @apiGroup Sound
- * 
- * @apiParam {name} name of the city
- * 
- * @apiSuccess {Object[]} sounds 
- */
-router.get('/city/:name', async (req,res,next)=>{
-    //TODO
-})
-
-/**
- * @api {get} /city/stats/ Get the number of sounds recorded by city
- * @apiName GET NUMBER SOUNDS BY CITY
- * @apiGroup Sound
- * 
- * @apiSuccess {Object[]} sounds 
- */
-router.get('/city/stats', async (req,res,next) =>{
-    //TODO 
 })
 
 /**
