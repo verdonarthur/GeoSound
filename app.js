@@ -4,6 +4,7 @@ const config = require('./config/app.conf.js')
 const app = express()
 const port = process.env.PORT || 3000
 const userRouter = require('./routes/userRouter')
+const categoryRouter = require('./routes/categoryRouter')
 
 /*+++++++++++++++EXPRESS CONFIGURATION++++++++++++++++++*/
 app.use(express.json());       // to support JSON-encoded bodies
@@ -17,6 +18,8 @@ mongoose.connect(config.urlDatabase);
 app.use('/api/sound', require('./routes/soundRouter'))
 
 app.use('/api/user', userRouter)
+
+app.use('/api/category', categoryRouter)
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -62,7 +65,7 @@ app.use((err, req, res, next) => {
 
     // Render the error page
     res.status(err.status || 500);
-    res.render('error');
+    //res.render('error');
 });
 
 app.get('/', (req, res) => {
