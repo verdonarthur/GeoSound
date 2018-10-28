@@ -29,6 +29,9 @@ module.exports = class {
         })
     }
 
+    /**
+     * Get some number about the cities
+     */
     static async getCitiesStat() {
         let tmpCities = await Sound.aggregate([{
             // used to destructurate the city from the array of coordinate
@@ -50,9 +53,6 @@ module.exports = class {
         ])
 
         return tmpCities
-        /*return tmpCities.map((value) => {
-            return value._id
-        })*/
     }
 
     /**
