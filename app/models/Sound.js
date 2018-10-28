@@ -21,13 +21,14 @@ let CoordinateSchema = new mongoose.Schema({
 /*
     example :
     db.sounds.insert({
-        sound:"asklfjdslnvdfl4i30tggwvj4957h479wpvh574wv4gG(G&F"*(FT(OVG&ç)),
-        coordinate:[
-            {city:"Lausanne",loc:{x: -73.974, y: 40.764}}
+        "sound": "asklfjdslnvdfl4i30tggwvj4957h479wpvh574wv4gG(G&F\"*(FT(OVG&ç))",
+        "coordinate": [
+            { "city": "Lausanne", "loc": { "x": -73.974, "y": 40.764 } }
         ],
-        description:"a sound recorded in lausanne",
-        quality:"Bad",
-        user:"_1"
+        "categories": ["5bd5ee1c4af7e818405792f5", "5bd5ee1c4af7e818405792f5"],
+        "description": "a sound recorded in lausanne",
+        "quality": "Bad",
+        "user": "5bd5ee1c4af7e818405792f5"
     })
 */
 let soundSchema = new mongoose.Schema({
@@ -40,17 +41,17 @@ let soundSchema = new mongoose.Schema({
     description: {
         type: String
     },
-    /*categories: {
-        type: String // TODO
-    },*/
+    categories: {
+        type: [ObjectId]
+    },
     quality: {
         type: String,
         enum: ['Bad', 'Good'],
     },
     user: {
-        type: Number, // TODO a change
+        type: ObjectId, 
         required: true
     },
-});
+})
 
-module.exports = mongoose.model('sounds', soundSchema);
+module.exports = mongoose.model('sounds', soundSchema)

@@ -25,11 +25,61 @@ async function loadSoundFromParam(req, res, next) {
         err.status = 400
         return next(err)
     }
-
 }
 
 /**
- * Get all sounds from the db
+ * @api {get} /sound/city/ Get all sound grouped by city
+ * @apiName GET SOUNDS GROUPED BY CITY
+ * @apiGroup Sound
+ * 
+ * @apiSuccess {Object[]} sounds 
+ */
+router.get('/city', async (req, res, next) => {
+    try {
+        res.send(await SoundController.getAllCities())
+    } catch (err) {
+        return next(err)
+    }
+})
+
+/**
+ * @api {get} /city/stats/ Get the number of sounds recorded by city
+ * @apiName GET NUMBER SOUNDS BY CITY
+ * @apiGroup Sound
+ * 
+ * @apiSuccess {Object[]} sounds 
+ */
+router.get('/city/stats', async (req, res, next) => {
+    try {
+        res.send(await SoundController.getCitiesStat())
+    } catch (err) {
+        return next(err)
+    }
+})
+
+/**
+ * @api {get} /sound/city/:name Get all sound in a city
+ * @apiName GET SOUNDS BY CITY
+ * @apiGroup Sound
+ * 
+ * @apiParam {name} name of the city
+ * 
+ * @apiSuccess {Object[]} sounds 
+ */
+router.get('/city/:name', async (req, res, next) => {
+    try {
+        res.send(await SoundController.getSoundByCity(req.params.name))
+    } catch (err) {
+        return next(err)
+    }
+})
+
+/**
+ * @api {get} /sound/ Request all Sounds
+ * @apiName GET ALL SOUND
+ * @apiGroup Sound
+ *
+ * @apiSuccess {Object[]} sounds 
  */
 router.get('/', async (req, res, next) => {
     try {
@@ -40,7 +90,13 @@ router.get('/', async (req, res, next) => {
 })
 
 /**
- * Retrieve a sound by his id
+ * @api {get} /sound/:id Retrieve a sound by his id
+ * @apiName GET A SOUND
+ * @apiGroup Sound
+ * 
+ * @apiParam {Number} id Sound unique ID.
+ * 
+ * @apiSuccess {Object} sounds 
  */
 router.get('/:id', loadSoundFromParam, async (req, res, next) => {
     try {
@@ -52,7 +108,12 @@ router.get('/:id', loadSoundFromParam, async (req, res, next) => {
 })
 
 /**
- * Post a sound in the db
+ * @api {post} /sound/ Save a new sound
+ * @apiName POST SOUND
+ * @apiGroup Sound
+ * 
+ * 
+ * @apiSuccess {Object} sounds 
  */
 router.post('/', async (req, res, next) => {
     try {
@@ -63,7 +124,13 @@ router.post('/', async (req, res, next) => {
 })
 
 /**
- * Update a sound in db
+ * @api {put} /sound/:id Update a sound
+ * @apiName PUT SOUND
+ * @apiGroup Sound
+ * 
+ * @apiParam {Number} id Sound unique ID.
+ * 
+ * @apiSuccess {Object} sounds 
  */
 router.put('/:id', loadSoundFromParam, async (req, res, next) => {
     try {
@@ -74,7 +141,13 @@ router.put('/:id', loadSoundFromParam, async (req, res, next) => {
 })
 
 /**
- * Remove a sound in db
+ * @api {delete} /sound/:id remove a sound
+ * @apiName DELETE SOUND
+ * @apiGroup Sound
+ * 
+ * @apiParam {Number} id Sound unique ID.
+ * 
+ * @apiSuccess {String} Success 
  */
 router.delete('/:id', loadSoundFromParam, async (req, res, next) => {
     try {

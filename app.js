@@ -9,11 +9,11 @@ const soundRouter = require('./routes/soundRouter')
 const authenticate = require('./app/utils/authenticate')
 
 /*+++++++++++++++EXPRESS CONFIGURATION++++++++++++++++++*/
-app.use(express.json());       // to support JSON-encoded bodies
-app.use(express.urlencoded()); // to support URL-encoded bodies
+app.use(express.json())       // to support JSON-encoded bodies
+app.use(express.urlencoded()) // to support URL-encoded bodies
 
 /*+++++++++++++++MONGOOSE CONFIGURATION++++++++++++++++++*/
-mongoose.connect(config.urlDatabase);
+mongoose.connect(config.urlDatabase)
 
 /*+++++++++++++++API ROUTE LOADING++++++++++++++++++*/
 // example : app.use('/api/user', user)
@@ -29,22 +29,21 @@ app.get('/', (req, res) => {
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {
-    const err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-});
+    const err = new Error('Not Found')
+    err.status = 404
+    next(err)
+})
 
+/*+++++++++++++++API MIDDLEWARE TO MANAGE ERROR++++++++++++++++++*/
 // API error handler (responds with JSON) (and error from register function)
 
 app.use('/api|register', (err, req, res, next) => {
-
-
     // Log the error on stderr
-    console.warn(err);
+    console.warn(err)
 
     // Respond with 422 Unprocessable Entity if it's a Mongoose validation error
     if (err.name == 'ValidationError' && !err.status) {
-        err.status = 422;
+        err.status = 422
     }
 
     // Respond with 409 for errors coming from Mongo where a unique key already exists (such as a username already existing when trying to register)
@@ -58,34 +57,33 @@ app.use('/api|register', (err, req, res, next) => {
     }
 
     // Set the response status code
-    res.status(err.status || 500);
+    res.status(err.status || 500)
 
     // Send the error message in the response
     const response = {
         message: err.message
-    };
+    }
 
     // If it's a validation error, also send the errors details from Mongoose
     if (err.status == 422) {
-        response.errors = err.errors;
+        response.errors = err.errors
     }
 
     // Send the error response
-    res.send(response);
-});
+    res.send(response)
+})
 
 // Generic error handler (responds with HTML)
 app.use((err, req, res, next) => {
 
     // Set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
+    res.locals.message = err.message
+    res.locals.error = req.app.get('env') === 'development' ? err : {}
 
     // Render the error json
     res.status(err.status || 500);
     res.send(err);
 });
-
 
 app.listen(port,
     () => console.log(`App listening on port : ${port}!`))
