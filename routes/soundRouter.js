@@ -83,7 +83,24 @@ router.get('/city/:name', async (req, res, next) => {
  */
 router.get('/', async (req, res, next) => {
     try {
-        res.send(await SoundController.getAllSound())
+        // Parse the "page" param (default to 1 if invalid)
+        let page = parseInt(req.query.page, 10);
+        if (isNaN(page) || page < 1) {
+            page = 1;
+        }
+        // Parse the "pageSize" param (default to 10 if invalid)
+        let pageSize = parseInt(req.query.pageSize, 10);
+        if (isNaN(pageSize) || pageSize < 0 || pageSize > 10) {
+            pageSize = 10;
+        }
+
+        let sounds = await SoundController.getAllSoundWithPagination(page,pageSize)
+
+        res.set('Pagination-Page', page);
+        res.set('Pagination-PageSize', pageSize);
+        res.set('Pagination-Total', await SoundController.getNumberOfSoundInDB());
+
+        res.send(sounds)
     } catch (err) {
         return next(err)
     }
@@ -134,6 +151,13 @@ router.post('/', async (req, res, next) => {
  */
 router.put('/:id', loadSoundFromParam, async (req, res, next) => {
     try {
+        console.debug(res.sound)
+        if (!res.sound.canUserUpdateorDelete(req.currentUserId)) {
+            const err = new Error("unauthorised")
+            err.status = 403
+            throw err
+        }
+
         res.send(await SoundController.putASound(req.params.id, req.body))
     } catch (err) {
         return next(err)
@@ -151,6 +175,14 @@ router.put('/:id', loadSoundFromParam, async (req, res, next) => {
  */
 router.delete('/:id', loadSoundFromParam, async (req, res, next) => {
     try {
+
+        if (!res.sound.canUserUpdateorDelete(req.currentUserId)) {
+            const err = new Error("unauthorised")
+            err.status = 403
+            throw err
+        }
+
+
         res.send(await SoundController.deleteASound(res.sound))
     } catch (err) {
         next(err)
