@@ -230,7 +230,8 @@ router.put('/:id', findUserMiddleware, function (req, res, next) {
  * @apiName DeleteUser
  * @apiGroup User
  * @apiUse AuthHeader
- *
+ * @apiParam (Request body) {email} email new Email of the user (needs to be sent even if not modified)
+ * @apiParam (Request body) {string} password new Password of the user (needs to be sent even if not modified)
  * @apiSuccess {object[]} user  Confirmation of deletion
  * @apiSuccessExample {json} Success-Response:
  * HTTP/1.1 200 OK

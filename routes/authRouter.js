@@ -42,6 +42,13 @@ const saltRounds = 10;
  */
 router.post('/login', function (req, res, next) {
 
+    if(req.body.email == null || req.body.password == null )
+    {
+        let err = new Error('Bad Request')
+        err.message = "Missing passwor or email field"
+        err.status = 400
+        return next(err)
+    }
     User.verifyCredentials(req.body.email, req.body.password, function (err, user) {
         if (err) {
             return next(err)

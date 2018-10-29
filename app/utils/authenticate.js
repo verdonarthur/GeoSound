@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const config = require('../../config/app.conf.js')
-module.exports = function(req, res, next)
-{
+const User = require('../models/User');
+module.exports = function (req, res, next) {
 
     const authorization = req.get('Authorization');
     if (!authorization) {
@@ -30,8 +30,20 @@ module.exports = function(req, res, next)
             err.status = "401"
             err.message = "Your token is invalid or has expired"
         } else {
-            req.currentUserId = payload.sub;
-            next(); // Pass the ID of the authenticated user to the next middleware.
+            User.findOne({_id: payload.sub}).exec(function (err, user) {
+                if (err) {
+
+                    return next(err)
+                }
+                if (user === null) {
+                    const err = new Error()
+                    err.status = 403
+                    err.message = 'User Doesn\'t exist anymore'
+                    return next(err)
+                }
+                req.currentUserId = payload.sub;
+                next(); // Pass the ID of the authenticated user to the next middleware.
+            })
         }
     });
 
