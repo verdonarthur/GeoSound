@@ -64,7 +64,7 @@ userSchema.statics.verifyCredentials = function (email, password, callback) {
             } else if (!valid) {
                 const err = new Error('invalid password')
                 err.status = 401
-                err.message = 'invlid password'
+                err.message = 'invalid password'
                 return callback(err)
             }
 
