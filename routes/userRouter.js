@@ -89,7 +89,7 @@ router.get('/', function (req, res, next) {
  * @apiGroup User
  * @apiUse AuthHeader
  *
- * * @apiParam (Request body) {name {3-20}} name Name of the new user
+ * @apiParam (Request body) {name {3-20}} name Name of the new user
  * @apiParam (Request body) {email} email Email of the new user
  * @apiParam (Request body) {string} password Password of the new user
  *
@@ -178,7 +178,9 @@ router.post('/', utils.requireJson, function (req, res, next) {
  * @apiName PutUser
  * @apiGroup User
  * @apiUse AuthHeader
- *
+ * @apiParam (Request body) {name {3-20}} name new Name of the user (needs to be sent even if not modified)
+ * @apiParam (Request body) {email} email new Email of the user (needs to be sent even if not modified)
+ * @apiParam (Request body) {string} password new Password of the user (needs to be sent even if not modified)
  * @apiSuccess {object[]} user  An array containing the modified user
  * @apiSuccessExample {json} Success-Response:
  * HTTP/1.1 200 OK
