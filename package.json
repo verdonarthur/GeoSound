@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/verdonarthur/GeoSound#readme",
   "dependencies": {
-    "bcrypt": "^3.0.1",
+    "bcrypt": "^3.0.2",
     "express": "^4.16.3",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.3.2"
