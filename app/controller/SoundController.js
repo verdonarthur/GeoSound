@@ -9,6 +9,22 @@ module.exports = class {
     }
 
     /**
+     * return all sound but wiht pagination
+     * @param {*} page 
+     * @param {*} pageSize 
+     */
+    static async getAllSoundWithPagination(page, pageSize){        
+        return Sound.find().skip((page - 1) * pageSize).limit(pageSize)
+    }
+
+    /**
+     * Return the number of sound in the db
+     */
+    static async getNumberOfSoundInDB(){
+        return Sound.find().count()
+    }
+
+    /**
      * Return all city recorded in the db
      */
     static async getAllCities() {
@@ -76,12 +92,10 @@ module.exports = class {
      * @param {Object} sound 
      */
     static async postASound(sound) {
-        if (!sound.sound || !sound.coordinate || !sound.description
-            || !sound.quality || !sound.user) {
-            throw new Error("Missing fields in :" + sound)
-        }
+        await Sound.validate(sound)
 
         let aSound = new Sound(sound)
+
         return aSound.save()
 
     }
@@ -92,6 +106,10 @@ module.exports = class {
      * @param {Object} sound 
      */
     static async putASound(id, sound) {
+        await Sound.validate(sound)
+
+
+
         return Sound.findOneAndUpdate({ _id: id }, sound, { new: true });
     }
 
