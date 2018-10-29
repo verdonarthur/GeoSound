@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Category = require('../app/models/Category')
+const Sound = require('../app/models/Sound')
 
 /**
  * @api {get} /category get all the categories
@@ -27,12 +28,43 @@ router.get('/', function (req, res, next) {
  * @apiSuccess {Object} all the categories
  */
 router.get('/:id', function (req, res, next) {
-    Category.find({_id:req.params.id}).sort('name').exec(function (err, category) {
+    Category.find({ _id: req.params.id }).sort('name').exec(function (err, category) {
         if (err) {
             err.status = 400
             return next(err)
         }
         res.send(category)
+    })
+})
+
+/**
+ * @api {get} /category/:id/sounds get all the sounds of a category
+ * @apiName GetSoundsofCategory
+ * @apiGroup Category
+ *
+ * @apiSuccess {Object} get all the sounds of a category
+ */
+router.get('/:id/sounds', function (req, res, next) {
+    
+    Category.findOne({ _id: req.params.id }).exec(function (err, category) {
+        if (err) {
+            err.status = 400
+            return next(err)
+        }
+        
+        Sound.aggregate([
+            {
+                $match: {
+                    "categories" : category._id
+                }
+            }
+        ], function (err, results) {
+            if (err) {
+                err.status = 400
+                return next(err)
+            }
+            res.send(results)
+        });
     })
 })
 
@@ -54,11 +86,11 @@ router.post('/', function (req, res, next) {
     const newCategoryDocument = new Category(newCategory)
 
     newCategoryDocument.save(function (err, savedCategory) {
-    if (err) {
-        return next(err)
-    }
+        if (err) {
+            return next(err)
+        }
 
-    res.send(savedCategory)
+        res.send(savedCategory)
     })
 })
 
@@ -70,7 +102,7 @@ router.post('/', function (req, res, next) {
  * @apiSuccess {Object} modifiy a specific category
  */
 router.put('/:id', function (req, res, next) {
-    Category.findOneAndUpdate({_id:req.params.id}, req.body,{new:true}, function(err, category){
+    Category.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true }, function (err, category) {
         if (err) {
 
             res.status(404).send('Category not found')
