@@ -20,7 +20,7 @@ router.get('/', function (req, res, next) {
 })
 
 /**
- * @api {get} /category get a specific category
+ * @api {get} /category/id get a specific category
  * @apiName GetCategories
  * @apiGroup Category
  *
@@ -36,10 +36,21 @@ router.get('/:id', function (req, res, next) {
     })
 })
 
-
+/**
+ * @api {post} /category add a category
+ * @apiName PostCategory
+ * @apiGroup Category
+ *
+ * @apiSuccess {Object} add a category
+ */
 router.post('/', function (req, res, next) {
 
     let newCategory = req.body
+
+    if (!newCategory.name || !newCategory.description) {
+        throw new Error("Missing fields in : category")
+    }
+
     const newCategoryDocument = new Category(newCategory)
 
     newCategoryDocument.save(function (err, savedCategory) {
@@ -51,7 +62,13 @@ router.post('/', function (req, res, next) {
     })
 })
 
-
+/**
+ * @api {put} /category/id modifiy a specific category
+ * @apiName PutCategory
+ * @apiGroup Category
+ *
+ * @apiSuccess {Object} modifiy a specific category
+ */
 router.put('/:id', function (req, res, next) {
     Category.findOneAndUpdate({_id:req.params.id}, req.body,{new:true}, function(err, category){
         if (err) {
@@ -63,7 +80,13 @@ router.put('/:id', function (req, res, next) {
     })
 })
 
-
+/**
+ * @api {delete} /category/id delete a specific category
+ * @apiName DeleteCategory
+ * @apiGroup Category
+ *
+ * @apiSuccess {Object}  delete a specific category
+ */
 router.delete('/:id', function (req, res, next) {
 
     Category.findByIdAndRemove(req.params.id).exec(function (err, user) {
