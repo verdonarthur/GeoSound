@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon",
     "start": "node app.js",
-    "apidoc":"apidoc -i routes -o docs"
+    "apidoc": "apidoc -i routes -o docs"
   },
   "repository": {
     "type": "git",

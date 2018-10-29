@@ -37,7 +37,7 @@ app.use((req, res, next) => {
 /*+++++++++++++++API MIDDLEWARE TO MANAGE ERROR++++++++++++++++++*/
 // API error handler (responds with JSON) (and error from register function)
 
-app.use('/api|register', (err, req, res, next) => {
+app.use('/api|/register', (err, req, res, next) => {
     // Log the error on stderr
     console.warn(err)
 
