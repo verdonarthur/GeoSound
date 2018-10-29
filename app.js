@@ -4,6 +4,7 @@ const config = require('./config/app.conf.js')
 const app = express()
 const port = process.env.PORT || 3000
 const userRouter = require('./routes/userRouter')
+const categoryRouter = require('./routes/categoryRouter')
 const authRouter = require('./routes/authRouter')
 const soundRouter = require('./routes/soundRouter')
 const authenticate = require('./app/utils/authenticate')
@@ -26,6 +27,8 @@ app.use('/api/user', authenticate, userRouter)
 app.get('/', (req, res) => {
     res.send('application is running')
 });
+
+app.use('/api/category', categoryRouter)
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {
