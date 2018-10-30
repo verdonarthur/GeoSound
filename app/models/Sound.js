@@ -6,16 +6,32 @@ let ObjectId = mongoose.Schema.Types.ObjectId
 
 // Define the schema for the coordinate
 
+
+/**
+ * Example :
+ * { x: -73.974, y: 40.764 }
+ */
+let CoordinateSchema = new mongoose.Schema({
+    x:{
+        type:Number,
+        required:true
+    },
+    y:{
+        type:Number,
+        required:true
+    }
+})
+
 /*
     example :
     db.zips2.insert( { _id: 1, city: "b", loc: { x: -73.974, y: 40.764 } } )
     db.zips2.insert( { _id: 2, city: "b", loc: { x: -73.981, y: 40.768 } } )
 */
-let CoordinateSchema = new mongoose.Schema({
+let CoordinateWithCitySchema = new mongoose.Schema({
     city: String,
     loc: {
-        type: Map,
-        of: String
+        type:CoordinateSchema,
+        required:true
     }
 
 })
@@ -41,7 +57,7 @@ let soundSchema = new mongoose.Schema({
         //yourBufferData.toString('base64')
     },
     coordinate: {
-        type: [CoordinateSchema],
+        type: [CoordinateWithCitySchema],
         required: true
     },
     description: {
@@ -80,6 +96,9 @@ soundSchema.statics.validate = async (sound) => {
         err.status = 404
         throw err
     }
+
+    // remove duplicate categories
+    sound.categories = [...new Set(sound.categories)]
 
 }
 

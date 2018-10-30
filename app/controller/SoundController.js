@@ -63,7 +63,7 @@ module.exports = class {
             $group: {
                 _id: '$coordinate.city',
                 nbrSound: { "$sum": 1 },
-                sounds: { "$push": "$$CURRENT" }
+                // can  be used to get all sound by city : sounds: { "$push": "$$CURRENT" }
             }
         }
         ])
