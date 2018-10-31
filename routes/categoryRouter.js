@@ -7,8 +7,31 @@ const Sound = require('../app/models/Sound')
  * @api {get} /category get all the categories
  * @apiName GetCategories
  * @apiGroup Category
+ * @apiUse AuthHeader
+ * 
+ * @apiParam {String} name name of the category
+ * @apiParam {String} description description of thecategory
+ *  
  *
- * @apiSuccess {Object} all the categories
+ * @apiSuccess {Object[]} categories
+ *
+ * @apiSuccessExample {json} Success-Response:
+ * HTTP/1.1 200 OK
+ *[
+ *{"_id": "5bd70ac772c3a20016a55a1c","name": "Airplanes","description": "Yeah flying machines","__v": 0},
+ *{"_id": "5bd70afe72c3a20016a55a1d","name": "Cars","description": "Yeah rolling machines","__v": 0},
+ *{"_id": "5bd70c6172c3a20016a55a2e","name": "City","description": "Town, only bigger!","__v": 0}
+ *]
+ *
+ * @apiHeader {Number} Pagination-Page Num of the current page
+ * @apiHeader {Number} Pagination-PageSize Number of element per page
+ * @apiHeader {Number} Pagination-Total Total number of element in database
+ * 
+ * @apiHeaderExample {string} Pagination Header Example:
+ * Pagination-Page → 1
+ * Pagination-PageSize → 5
+ * Pagination-Total → 10
+ * 
  */
 router.get('/', function (req, res, next) {
     Category.find().sort('name').exec(function (err, categories) {
@@ -21,11 +44,17 @@ router.get('/', function (req, res, next) {
 })
 
 /**
- * @api {get} /category/id get a specific category
+ * @api {get} /category/:id get a specific category
  * @apiName GetCategories
  * @apiGroup Category
- *
- * @apiSuccess {Object} all the categories
+ * @apiUse AuthHeader
+ * 
+ * @apiParam {ObjectId} id ObjectId of a category
+ * 
+* @apiSuccess {Object} category a specific category in API
+ * @apiSuccessExample {json} Success-Response:
+ * HTTP/1.1 200 OK
+ * {"_id": "5bd70c6172c3a20016a55a2e","name": "City","description": "Town, only bigger!","__v": 0}
  */
 router.get('/:id', function (req, res, next) {
     Category.find({ _id: req.params.id }).sort('name').exec(function (err, category) {
@@ -41,8 +70,20 @@ router.get('/:id', function (req, res, next) {
  * @api {get} /category/:id/sounds get all the sounds of a category
  * @apiName GetSoundsofCategory
  * @apiGroup Category
+ * @apiUse AuthHeader
+ * 
+ * 
+ * @apiSuccess {Object[]} get all the sounds of a category
+ * @apiSuccessExample {json} Success-Response:
+ * HTTP/1.1 200 OK
  *
- * @apiSuccess {Object} get all the sounds of a category
+ * 
+ * 
+ * 
+ *  [
+ *  {"_id": "5bd70c5c72c3a20016a55a2c","categories": ["5bd70ac772c3a20016a55a1c","5bd70afe72c3a20016a55a1d"],"sound": "***","coordinate":[{"_id": "5bd70c5c72c3a20016a55a2d","city": "8","loc": {"y": "aaa"}}],"description": "---","quality": "Bad","user": "5bd70bf372c3a20016a55a26","__v": 0},
+ *  {"_id": "5bd70d1772c3a20016a55a35","categories": ["5bd70ac772c3a20016a55a1c","5bd70ac772c3a20016a55a1c"],"sound": "efefwef","coordinate": [{"_id": "5bd70d1772c3a20016a55a36","city": "8","loc": {"y": "aaa"}}],"description": "---","quality": "Bad","user": "5bd70bf372c3a20016a55a26","__v": 0}
+ * ]
  */
 router.get('/:id/sounds', function (req, res, next) {
     
@@ -69,11 +110,17 @@ router.get('/:id/sounds', function (req, res, next) {
 })
 
 /**
- * @api {post} /category add a category
+ * @api {post} /category add a new category
  * @apiName PostCategory
  * @apiGroup Category
  *
- * @apiSuccess {Object} add a category
+ * @apiParam (Request body) {String} name name of the new category
+ * @apiParam (Request body) {String} description description of the new category
+ * 
+ * @apiSuccess {Object} a new category
+ * @apiSuccessExample {json} Success-Response:
+ * HTTP/1.1 200 OK
+ * {"_id": "5bd70c6172c3a20016a55a2e","name": "City","description": "Town, only bigger!","__v": 0}
  */
 router.post('/', function (req, res, next) {
 
@@ -95,11 +142,19 @@ router.post('/', function (req, res, next) {
 })
 
 /**
- * @api {put} /category/id modifiy a specific category
+ * @api {put} /category/:id modify a specific category
  * @apiName PutCategory
  * @apiGroup Category
  *
- * @apiSuccess {Object} modifiy a specific category
+ * @apiParam {Number} id of the category you want to modify
+ * 
+ * @apiParam (Request body) {String} name new name of the category
+ * @apiParam (Request body) {String} description new description of the category
+ * 
+ * @apiSuccess {Object} modifiy a specific category 
+ * @apiSuccessExample {json} Success-Response:
+ * HTTP/1.1 200 OK
+ * {"_id": "5bd70c6172c3a20016a55a2e","name": "City","description": "Town, only bigger!","__v": 0}
  */
 router.put('/:id', function (req, res, next) {
     Category.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true }, function (err, category) {
@@ -113,23 +168,40 @@ router.put('/:id', function (req, res, next) {
 })
 
 /**
- * @api {delete} /category/id delete a specific category
+ * @api {delete} /category/:id delete a specific category
  * @apiName DeleteCategory
  * @apiGroup Category
  *
- * @apiSuccess {Object}  delete a specific category
+ * @apiParam {Number} id id of the category you want to delete. this category must not to be defined in a sound
+ * 
+ * @apiSuccess {String} Success 
+ * @apiSuccessExample {json} Success-Response:
+ * HTTP/1.1 200 OK
+ * Success
  */
 router.delete('/:id', function (req, res, next) {
 
-    Category.findByIdAndRemove(req.params.id).exec(function (err, user) {
+    Sound.find({categories: req.params.id }).exec(function (err, sound) {
         if (err) {
-            res.status(404).send('Category not found')
+            err.status = 400
             return next(err)
         }
+        if(!sound){
+            Category.findByIdAndRemove(req.params.id).exec(function (err, user) {
+                if (err) {
+                    res.status(404).send('Category not found')
+                    return next(err)
+                }
+        
+                res.status(200).send({message: "Category with ID : " + req.params.id + " successfully deleted"})
+            })
+        }
+        else{
+            res.status(200).send({message: "Category with ID : " + req.params.id + " is defined in some sounds. You can't delete it"})
+        }
 
-        res.status(200).send("Category with ID : " + req.params.id + " successfully deleted")
+
     })
-
 })
 
 module.exports = router
