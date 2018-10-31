@@ -19,8 +19,8 @@ let CoordinateSchema = new mongoose.Schema({
     y:{
         type:Number,
         required:true
-    }
-})
+    },
+}, { _id: false })
 
 /*
     example :
@@ -33,17 +33,14 @@ let CoordinateWithCitySchema = new mongoose.Schema({
         type:CoordinateSchema,
         required:true
     }
-
-})
+}, { _id: false })
 
 // define the sound Schema
 /*
     example :
     db.sounds.insert({
         "sound": "asklfjdslnvdfl4i30tggwvj4957h479wpvh574wv4gG(G&F\"*(FT(OVG&ç))",
-        "coordinate": [
-            { "city": "Lausanne", "loc": { "x": -73.974, "y": 40.764 } }
-        ],
+        "coordinate": { "city": "Lausanne", "loc": { "x": -73.974, "y": 40.764 }},
         "categories": ["5bd5ee1c4af7e818405792f5", "5bd5ee1c4af7e818405792f5"],
         "description": "a sound recorded in lausanne",
         "quality": "Bad",
@@ -57,7 +54,7 @@ let soundSchema = new mongoose.Schema({
         //yourBufferData.toString('base64')
     },
     coordinate: {
-        type: [CoordinateWithCitySchema],
+        type: CoordinateWithCitySchema,
         required: true
     },
     description: {
