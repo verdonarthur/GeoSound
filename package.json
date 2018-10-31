@@ -1,8 +1,8 @@
 {
   "name": "geosound",
   "version": "1.0.0",
-  "engines": { 
-    "node": ">=10.3.0" 
+  "engines": {
+    "node": ">=10.3.0"
   },
   "description": "geosound is an app wich you can create sounds that are geolocalized",
   "main": "app.js",
