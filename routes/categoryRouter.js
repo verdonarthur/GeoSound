@@ -65,9 +65,9 @@ router.get('/:id', function (req, res, next) {
  * @apiSuccessExample {json} Success-Response:
  * HTTP/1.1 200 OK
  *
- *  [
- *  {"_id": "5bd70c5c72c3a20016a55a2c","categories": ["5bd70ac772c3a20016a55a1c","5bd70afe72c3a20016a55a1d"],"sound": "***","coordinate":[{"_id": "5bd70c5c72c3a20016a55a2d","city": "8","loc": {"y": "aaa"}}],"description": "---","quality": "Bad","user": "5bd70bf372c3a20016a55a26","__v": 0},
- *  {"_id": "5bd70d1772c3a20016a55a35","categories": ["5bd70ac772c3a20016a55a1c","5bd70ac772c3a20016a55a1c"],"sound": "efefwef","coordinate": [{"_id": "5bd70d1772c3a20016a55a36","city": "8","loc": {"y": "aaa"}}],"description": "---","quality": "Bad","user": "5bd70bf372c3a20016a55a26","__v": 0}
+ * [
+ * {"categories":["5bd6cf249903d62d18f7f03f"],"_id":"5bd6d3f6d806a2097ca18e4f","sound":"asklfjdslnvdfl4i30tggwvj4957h479wpvh574wv4gG(G&F)","coordinate":{"city":"Pully AB","loc":{"x":-74.974,"y":40.764}},"description":"a sound recorded in Pully AB","quality":"Bad","user":"5bd6cdce77705b055c73569c","__v":0},
+ * {"categories":["5bd6cf249903d62d18f7f03f"],"_id":"5bd6d9908a4a2e3774a90fcf","sound":"asklfjdslnvdfl4i30tggwvj4957h479wpvh574wv4gG(G&F)","coordinate":{"city":"Pully A","loc":{"x":-74.974,"y":40.764}},"description":"a sound recorded in Lausanne A","quality":"Bad","user":"5bd7cdce77705b055c73569c","__v":0}
  * ]
  */
 router.get('/:id/sounds', function (req, res, next) {
