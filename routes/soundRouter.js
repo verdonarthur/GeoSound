@@ -28,7 +28,7 @@ async function loadSoundFromParam(req, res, next) {
 }
 
 /**
- * @api {get} /sound/city/ Get all sound grouped by city
+ * @api {get} /sound/city/ Get all sounds grouped by city
  * @apiName GET SOUNDS GROUPED BY CITY
  * @apiGroup Sound
  * @apiUse AuthHeader
@@ -69,12 +69,12 @@ router.get('/city/stats', async (req, res, next) => {
 })
 
 /**
- * @api {get} /sound/city/:name Get all sound in a city
+ * @api {get} /sound/city/:name Get all sounds recorded in a city
  * @apiName GET SOUNDS BY CITY
  * @apiGroup Sound
  * @apiUse AuthHeader
  * 
- * @apiParam {name} name of the city
+ * @apiParam {string} name name of the city
  * 
  * @apiSuccess {Object[]} sounds An array containing all the sounds of a city
  * @apiSuccessExample {json} Success-Response:
@@ -91,7 +91,7 @@ router.get('/city/:name', async (req, res, next) => {
 })
 
 /**
- * @api {get} /sound?page=X&pageSize=Y Request all Sounds
+ * @api {get} /sound?page=X&pageSize=Y Get all Sounds
  * @apiName GET ALL SOUND
  * @apiGroup Sound
  * @apiUse AuthHeader
@@ -143,7 +143,7 @@ router.get('/', async (req, res, next) => {
 })
 
 /**
- * @api {get} /sound/:id Retrieve a sound by his id
+ * @api {get} /sound/:id Get a sound by its id
  * @apiName GET A SOUND
  * @apiGroup Sound
  * @apiUse AuthHeader
@@ -170,10 +170,10 @@ router.get('/:id', loadSoundFromParam, async (req, res, next) => {
  * @apiGroup Sound
  * 
  * @apiParam (Request body) {String} sound Sound file exported in base64
- * @apiParam (Request body) {ObjectId[]} categories list of category Id of releated to the sound
- * @apiParam (Request body) {CoordinateSchema} coordinate a coordinate wich must have this format {"city":"Name of the city","loc":{"x":LatitudeDegree,"y":LongitudeDegree}}
+ * @apiParam (Request body) {ObjectId[]} categories list of category Ids belonging to the sound
+ * @apiParam (Request body) {CoordinateSchema} coordinate a coordinate which must have this format {"city":"Name of the city","loc":{"x":LatitudeDegree,"y":LongitudeDegree}}
  * @apiParam (Request body) {string} description description of a sound
- * @apiParam (Request body) {string} quality A string wich can be "Bad" or "Good"
+ * @apiParam (Request body) {string} quality A string which can be "Bad" or "Good"
  * 
  * @apiSuccess {Object} sound
  * @apiSuccessExample {json} Success-Response:
@@ -198,10 +198,10 @@ router.post('/', async (req, res, next) => {
  * @apiParam {Number} id Sound unique ID.
  * 
  * @apiParam (Request body) {String} sound Sound file exported in base64
- * @apiParam (Request body) {ObjectId[]} categories list of category Id of releated to the sound
- * @apiParam (Request body) {CoordinateSchema} coordinate a coordinate wich must have this format {"city":"Name of the city","loc":{"x":LatitudeDegree,"y":LongitudeDegree}}
+ * @apiParam (Request body) {ObjectId[]} categories list of category Ids belonging to the sound
+ * @apiParam (Request body) {CoordinateSchema} coordinate a coordinate which must have this format {"city":"Name of the city","loc":{"x":LatitudeDegree,"y":LongitudeDegree}}
  * @apiParam (Request body) {string} description description of a sound
- * @apiParam (Request body) {string} quality A string wich can be "Bad" or "Good"
+ * @apiParam (Request body) {string} quality A string which can be "Bad" or "Good"
  * 
  * @apiSuccess {Object} sound return the modified sound 
  * @apiSuccessExample {json} Success-Response:
@@ -225,7 +225,7 @@ router.put('/:id', loadSoundFromParam, async (req, res, next) => {
 })
 
 /**
- * @api {delete} /sound/:id remove a sound
+ * @api {delete} /sound/:id Remove a sound
  * @apiName DELETE SOUND
  * @apiGroup Sound
  * 

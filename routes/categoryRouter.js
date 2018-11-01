@@ -4,7 +4,7 @@ const Category = require('../app/models/Category')
 const Sound = require('../app/models/Sound')
 
 /**
- * @api {get} /category get all the categories
+ * @api {get} /category Get all the categories
  * @apiName GetCategories
  * @apiGroup Category
  * @apiUse AuthHeader
@@ -33,7 +33,7 @@ router.get('/', function (req, res, next) {
 })
 
 /**
- * @api {get} /category/:id get a specific category
+ * @api {get} /category/:id Get a specific category
  * @apiName GetCategories
  * @apiGroup Category
  * @apiUse AuthHeader
@@ -56,7 +56,7 @@ router.get('/:id', function (req, res, next) {
 })
 
 /**
- * @api {get} /category/:id/sounds get all the sounds of a category
+ * @api {get} /category/:id/sounds Get all the sounds of a category
  * @apiName GetSoundsofCategory
  * @apiGroup Category
  * @apiUse AuthHeader
@@ -95,14 +95,14 @@ router.get('/:id/sounds', function (req, res, next) {
 })
 
 /**
- * @api {post} /category add a new category
+ * @api {post} /category Add a new category
  * @apiName PostCategory
  * @apiGroup Category
- *
+ * @apiUse AuthHeader
  * @apiParam (Request body) {String} name name of the new category
  * @apiParam (Request body) {String} description description of the new category
  * 
- * @apiSuccess {Object} a new category
+ * @apiSuccess {Object} category a new category
  * @apiSuccessExample {json} Success-Response:
  * HTTP/1.1 200 OK
  * {"_id": "5bd70c6172c3a20016a55a2e","name": "City","description": "Town, only bigger!","__v": 0}
@@ -127,11 +127,11 @@ router.post('/', function (req, res, next) {
 })
 
 /**
- * @api {put} /category/:id modify a specific category
+ * @api {put} /category/:id Modify a specific category
  * @apiName PutCategory
  * @apiGroup Category
  *
- * @apiParam {Number} id of the category you want to modify
+ * @apiParam {Number} id id of the category you want to modify
  * 
  * @apiParam (Request body) {String} name new name of the category
  * @apiParam (Request body) {String} description new description of the category
@@ -153,7 +153,7 @@ router.put('/:id', function (req, res, next) {
 })
 
 /**
- * @api {delete} /category/:id delete a specific category
+ * @api {delete} /category/:id Delete a specific category
  * @apiName DeleteCategory
  * @apiGroup Category
  *

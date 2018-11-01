@@ -84,7 +84,7 @@ router.get('/', function (req, res, next) {
 
 /* POST  => Create a new user */
 /**
- * @api {post} /api/user Create a user
+ * @api {post} /api/user Create a User
  * @apiName CreateUser
  * @apiGroup User
  * @apiUse AuthHeader
@@ -174,7 +174,7 @@ router.post('/', utils.requireJson, function (req, res, next) {
 
 /* Update user */
 /**
- * @api {put} /api/user/:id Modify users
+ * @api {put} /api/user/:id Modify a User
  * @apiName PutUser
  * @apiGroup User
  * @apiUse AuthHeader
@@ -224,7 +224,7 @@ router.put('/:id', findUserMiddleware, function (req, res, next) {
 
 
 /**
- * @api {delete} /api/user/:id delete user
+ * @api {delete} /api/user/:id Delete a User
  * @apiName DeleteUser
  * @apiGroup User
  * @apiUse AuthHeader
