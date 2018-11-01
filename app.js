@@ -23,12 +23,13 @@ app.use('/', authRouter)
 
 app.use('/api/sound', authenticate, soundRouter)
 app.use('/api/user', authenticate, userRouter)
+app.use('/api/category', authenticate, categoryRouter)
 
 app.get('/', (req, res) => {
     res.send('application is running')
 });
 
-app.use('/api/category', categoryRouter)
+
 
 // Catch 404 and forward to error handler
 app.use((req, res, next) => {
