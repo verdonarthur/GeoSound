@@ -67,4 +67,4 @@ typings/
 package-lock.json
 
 # remove docs folder (wich can be auto generate)
-docs
+# docs
