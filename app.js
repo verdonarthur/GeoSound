@@ -25,7 +25,7 @@ app.use('/api/sound', authenticate, soundRouter)
 app.use('/api/user', authenticate, userRouter)
 app.use('/api/category', authenticate, categoryRouter)
 
-app.use(express.static(path.join(__dirname, 'docs')));
+app.use(express.static('docs'));
 
 app.get('/', (req, res) => {
     res.send('api is running, you can find the doc <a href="./docs">here</a>')
