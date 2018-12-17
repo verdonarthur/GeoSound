@@ -2,7 +2,10 @@ const express = require('express')
 const mongoose = require('mongoose')
 const config = require('./config/app.conf.js')
 const app = express()
+const cors = require('cors')
 const port = process.env.PORT || 3000
+
+
 const userRouter = require('./routes/userRouter')
 const categoryRouter = require('./routes/categoryRouter')
 const authRouter = require('./routes/authRouter')
@@ -12,6 +15,7 @@ const authenticate = require('./app/utils/authenticate')
 /*+++++++++++++++EXPRESS CONFIGURATION++++++++++++++++++*/
 app.use(express.json())       // to support JSON-encoded bodies
 app.use(express.urlencoded()) // to support URL-encoded bodies
+app.use(cors())		      // to have CORS HEADER
 
 /*+++++++++++++++MONGOOSE CONFIGURATION++++++++++++++++++*/
 mongoose.connect(config.urlDatabase)
