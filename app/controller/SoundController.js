@@ -5,7 +5,7 @@ module.exports = class {
      * return all sound in database in JSON
      */
     static async getAllSound() {
-        return Sound.find({sound:0})
+        return Sound.find().select({sound:0})
     }
 
     /**
@@ -14,7 +14,7 @@ module.exports = class {
      * @param {*} pageSize 
      */
     static async getAllSoundWithPagination(page, pageSize){        
-        return Sound.find({sound:0}).skip((page - 1) * pageSize).limit(pageSize)
+        return Sound.find().select({sound:0}).skip((page - 1) * pageSize).limit(pageSize)
     }
 
     /**
