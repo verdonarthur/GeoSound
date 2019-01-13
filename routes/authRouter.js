@@ -51,7 +51,7 @@ router.post('/login', function (req, res, next) {
             if (err) {
                 return next(err)
             }
-            res.send({token: jwt})
+            res.send({ token: jwt, user: user })
         })
     })
 });
