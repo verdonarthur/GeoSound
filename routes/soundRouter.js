@@ -126,7 +126,7 @@ router.get('/', async (req, res, next) => {
         }
         // Parse the "pageSize" param (default to 10 if invalid)
         let pageSize = parseInt(req.query.pageSize, 10);
-        if (isNaN(pageSize) || pageSize < 0 || pageSize > 10) {
+        if (isNaN(pageSize) || pageSize < 0 || pageSize > 100) {
             pageSize = 10;
         }
 
