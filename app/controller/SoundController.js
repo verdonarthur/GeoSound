@@ -9,6 +9,14 @@ module.exports = class {
     }
 
     /**
+     * return all sound from a specific user
+     * @param {*} userId 
+     */
+    static async gettAllSoundFromUser(userId){
+        return Sound.find({'user':userId}).select({sound:0})
+    }
+
+    /**
      * return all sound but wiht pagination
      * @param {*} page 
      * @param {*} pageSize 

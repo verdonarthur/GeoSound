@@ -28,6 +28,24 @@ async function loadSoundFromParam(req, res, next) {
 }
 
 /**
+ * @api {get} /sound/user/ Get all sounds from the current user
+ * @apiName GET SOUNDS FROM USER
+ * @apiGroup Sound
+ * @apiUse AuthHeader
+ * 
+ * @apiSuccess {Object[]} sounds An array containing all the sounds of a city
+ * @apiSuccessExample {json} Success-Response:
+ * HTTP/1.1 200 OK
+ */
+router.get('/user', async (req, res, next)=>{
+    try{
+        res.send(await SoundController.gettAllSoundFromUser(req.currentUserId))
+    }catch(err){
+        return next(err)
+    }
+})
+
+/**
  * @api {get} /sound/city/ Get all sounds grouped by city
  * @apiName GET SOUNDS GROUPED BY CITY
  * @apiGroup Sound
